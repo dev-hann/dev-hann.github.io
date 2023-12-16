@@ -1,0 +1,11 @@
+.appBar {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  margin: 16px;
+}
+
+.appBar-item {
+  margin: 0px 10px 0px 10px;
+  cursor: pointer;
+}

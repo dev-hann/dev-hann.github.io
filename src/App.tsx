@@ -1,23 +1,33 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import AppBar from "./components/appBar/AppBar";
+import PageType from "./enums/PageType";
+import { useState } from "react";
 
 function App() {
+  const [page, updatePage] = useState<PageType>(PageType.about);
+
+  function body() {
+    switch (page) {
+      case PageType.about:
+        return <div>about!!</div>;
+
+      case PageType.post:
+        return <div>post</div>;
+
+      case PageType.portfolio:
+        return <div>portfolio</div>;
+    }
+  }
+
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        <AppBar
+          onTapPage={(page) => {
+            updatePage(page);
+          }}
+        />
+        {body()}
       </header>
     </div>
   );
