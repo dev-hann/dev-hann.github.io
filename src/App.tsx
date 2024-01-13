@@ -1,7 +1,9 @@
 import "./App.css";
-import AppBar from "./components/appBar/AppBar";
+import BlogAppBar from "./components/appBar/BlogAppBar";
 import PageType from "./enums/PageType";
 import { useState } from "react";
+import PostPage from "./pages/PostPage";
+import { AppBar, Typography } from "@mui/material";
 
 function App() {
   const [page, updatePage] = useState<PageType>(PageType.about);
@@ -12,7 +14,7 @@ function App() {
         return <div>about!!</div>;
 
       case PageType.post:
-        return <div>post</div>;
+        return <PostPage></PostPage>;
 
       case PageType.portfolio:
         return <div>portfolio</div>;
@@ -21,14 +23,12 @@ function App() {
 
   return (
     <div className="App">
-      <header className="App-header">
-        <AppBar
-          onTapPage={(page) => {
-            updatePage(page);
-          }}
-        />
-        {body()}
-      </header>
+      <BlogAppBar
+        onTapPage={(page) => {
+          updatePage(page);
+        }}
+      />
+      <body style={{ overflowY: "auto", flex: "1" }}>{body()}</body>
     </div>
   );
 }
