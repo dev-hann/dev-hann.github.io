@@ -1,5 +1,4 @@
 import 'package:blog/widget/body_layout.dart';
-import 'package:blog/widget/post_card.dart';
 import 'package:blog/widget/post_grid_view.dart';
 import 'package:flutter/material.dart';
 

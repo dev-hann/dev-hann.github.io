@@ -4,7 +4,6 @@ import 'package:blog/widget/body_layout.dart';
 import 'package:blog/widget/post_grid_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:markdown/markdown.dart' as md;
 
 class ProfileView extends StatelessWidget {
