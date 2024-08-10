@@ -1,6 +1,5 @@
 name: blog
-description: "A new Flutter project."
-publish_to: "none"
+description: "dev-hann's blog"
 version: 1.0.0+1
 
 environment:
@@ -14,6 +13,7 @@ dependencies:
   equatable:
   flutter_markdown: ^0.7.3
   markdown:
+  dio:
 
 dev_dependencies:
   flutter_test:
