@@ -1,12 +1,15 @@
+import 'package:blog/route/route.dart';
 import 'package:flutter/material.dart';
 
 class DevBodyLayout extends StatelessWidget {
   const DevBodyLayout({
     super.key,
+    required this.navigateKey,
     this.maxWidth = 1280.0,
     this.header,
     required this.child,
   });
+  final GlobalKey navigateKey;
   final double maxWidth;
   final Widget child;
   final Widget? header;

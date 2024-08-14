@@ -1,5 +1,6 @@
 import 'package:blog/icon/icon.dart';
 import 'package:blog/model/user.dart';
+import 'package:blog/route/route.dart';
 import 'package:blog/view/profile_view.dart/profile_view.dart';
 import 'package:blog/view/repository_view/repository_view.dart';
 import 'package:blog/widget/tab_bar.dart';
@@ -48,17 +49,21 @@ class _MainViewState extends State<MainView> with TickerProviderStateMixin {
             child: TabBarView(
               physics: const NeverScrollableScrollPhysics(),
               controller: tabController,
-              children: const [
-                ProfileView(
-                  user: User(
-                    name: "Hann (한)",
-                    imageURL:
-                        "https://avatars.githubusercontent.com/u/54878755?v=4",
-                    bio: "Flutter & Dart Developer",
-                    email: 'developer.hann@gmail.com',
-                  ),
+              children: [
+                Navigator(
+                  key: DevRoute.profileKey,
+                  initialRoute: "/profile",
+                  onGenerateRoute: (setting) {
+                    return DevRoute.routePage(setting.name);
+                  },
                 ),
-                RepositoryView(),
+                Navigator(
+                  key: DevRoute.repositoryKey,
+                  initialRoute: RepositoryView.routeName,
+                  onGenerateRoute: (setting) {
+                    return DevRoute.routePage(setting.name);
+                  },
+                ),
               ],
             ),
           ),

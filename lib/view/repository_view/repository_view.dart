@@ -1,4 +1,6 @@
 import 'package:blog/provider/repository_provider.dart';
+import 'package:blog/route/route.dart';
+import 'package:blog/view/repository_view/repository_detail_view.dart';
 import 'package:blog/widget/body_layout.dart';
 import 'package:blog/widget/loading_widget.dart';
 import 'package:blog/widget/post_grid_view.dart';
@@ -9,6 +11,9 @@ class RepositoryView extends ConsumerWidget {
   const RepositoryView({
     super.key,
   });
+  static String get routeName {
+    return "/repository";
+  }
 
   Widget tagListView() {
     return Column(
@@ -49,20 +54,38 @@ class RepositoryView extends ConsumerWidget {
     final provider = ref.watch(repositoryProvider);
     return provider.when(
       data: (data) {
-        return DevBodyLayout(
-          header: tagListView(),
-          child: Column(
-            children: [
-              searchTextField(),
-              const SizedBox(height: 16.0),
-              PostGridView(
-                crossAxisCount: 1,
-                itemList: provider.value ?? [],
-                onItemTap: (item) {
-                  print(item);
-                },
-              ),
-            ],
+        return PopScope(
+          canPop: false,
+          onPopInvokedWithResult: (didPop, result) {
+            print("###");
+            if (!didPop) {}
+          },
+          child: DevBodyLayout(
+            header: tagListView(),
+            navigateKey: DevRoute.repositoryKey,
+            child: Column(
+              children: [
+                searchTextField(),
+                const SizedBox(height: 16.0),
+                PostGridView(
+                  crossAxisCount: 1,
+                  itemList: provider.value ?? [],
+                  onItemTap: (item) {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) {
+                          return RepositoryDetailView(
+                            post: item,
+                          );
+                        },
+                      ),
+                    );
+                    print(item);
+                  },
+                ),
+              ],
+            ),
           ),
         );
       },
