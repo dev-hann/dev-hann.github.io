@@ -3,13 +3,17 @@ import 'package:blog/model/user.dart';
 import 'package:blog/route/route.dart';
 import 'package:blog/view/profile_view.dart/profile_view.dart';
 import 'package:blog/view/repository_view/repository_view.dart';
+import 'package:blog/widget/dev_app.dart';
 import 'package:blog/widget/tab_bar.dart';
+import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
 
 class MainView extends StatefulWidget {
   const MainView({
     super.key,
   });
+
+  static const routeName = "/";
 
   @override
   State<MainView> createState() => _MainViewState();
@@ -50,19 +54,11 @@ class _MainViewState extends State<MainView> with TickerProviderStateMixin {
               physics: const NeverScrollableScrollPhysics(),
               controller: tabController,
               children: [
-                Navigator(
-                  key: DevRoute.profileKey,
-                  initialRoute: "/profile",
-                  onGenerateRoute: (setting) {
-                    return DevRoute.routePage(setting.name);
-                  },
+                DevApp(
+                  routerConfig: DevRoute.profileRoute,
                 ),
-                Navigator(
-                  key: DevRoute.repositoryKey,
-                  initialRoute: RepositoryView.routeName,
-                  onGenerateRoute: (setting) {
-                    return DevRoute.routePage(setting.name);
-                  },
+                DevApp(
+                  routerConfig: DevRoute.repositoryRoute,
                 ),
               ],
             ),

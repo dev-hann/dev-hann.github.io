@@ -1,6 +1,5 @@
 import 'package:blog/icon/icon.dart';
 import 'package:blog/model/user.dart';
-import 'package:blog/route/route.dart';
 import 'package:blog/widget/body_layout.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
@@ -11,6 +10,8 @@ class ProfileView extends StatelessWidget {
     super.key,
     required this.user,
   });
+
+  static const routeName = "/profile";
   final User user;
 
   Widget headerWidget() {
@@ -190,8 +191,8 @@ class ProfileView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DevBodyLayout(
-        navigateKey: DevRoute.profileKey,
+    return Scaffold(
+      body: DevBodyLayout(
         header: headerWidget(),
         child: Column(
           children: [
@@ -201,6 +202,8 @@ class ProfileView extends StatelessWidget {
             // const SizedBox(height: 16.0),
             // contributeWidget(),
           ],
-        ));
+        ),
+      ),
+    );
   }
 }

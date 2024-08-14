@@ -11,9 +11,7 @@ class RepositoryView extends ConsumerWidget {
   const RepositoryView({
     super.key,
   });
-  static String get routeName {
-    return "/repository";
-  }
+  static const routeName = "/repository";
 
   Widget tagListView() {
     return Column(
@@ -52,49 +50,50 @@ class RepositoryView extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final provider = ref.watch(repositoryProvider);
-    return provider.when(
-      data: (data) {
-        return PopScope(
-          canPop: false,
-          onPopInvokedWithResult: (didPop, result) {
-            print("###");
-            if (!didPop) {}
-          },
-          child: DevBodyLayout(
-            header: tagListView(),
-            navigateKey: DevRoute.repositoryKey,
-            child: Column(
-              children: [
-                searchTextField(),
-                const SizedBox(height: 16.0),
-                PostGridView(
-                  crossAxisCount: 1,
-                  itemList: provider.value ?? [],
-                  onItemTap: (item) {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) {
-                          return RepositoryDetailView(
-                            post: item,
-                          );
-                        },
-                      ),
-                    );
-                    print(item);
-                  },
-                ),
-              ],
+    return Scaffold(
+      body: provider.when(
+        data: (data) {
+          return PopScope(
+            canPop: false,
+            onPopInvokedWithResult: (didPop, result) {
+              print("###");
+              if (!didPop) {}
+            },
+            child: DevBodyLayout(
+              header: tagListView(),
+              child: Column(
+                children: [
+                  searchTextField(),
+                  const SizedBox(height: 16.0),
+                  PostGridView(
+                    crossAxisCount: 1,
+                    itemList: provider.value ?? [],
+                    onItemTap: (item) {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) {
+                            return RepositoryDetailView(
+                                // post: item,
+                                );
+                          },
+                        ),
+                      );
+                      print(item);
+                    },
+                  ),
+                ],
+              ),
             ),
-          ),
-        );
-      },
-      error: (error, stackTrace) {
-        return Center(child: Text(error.toString()));
-      },
-      loading: () {
-        return const LoadingWidget();
-      },
+          );
+        },
+        error: (error, stackTrace) {
+          return Center(child: Text(error.toString()));
+        },
+        loading: () {
+          return const LoadingWidget();
+        },
+      ),
     );
   }
 }

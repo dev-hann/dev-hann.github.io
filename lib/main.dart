@@ -1,9 +1,11 @@
-import 'package:blog/view/main_view.dart';
+import 'package:blog/route/route.dart';
+import 'package:blog/widget/dev_app.dart';
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(
     const ProviderScope(
       child: MyApp(),
@@ -16,13 +18,8 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'dev-hann',
-      debugShowCheckedModeBanner: false,
-      // themeMode: ThemeMode.light,
-      theme: FlexThemeData.light(),
-      darkTheme: FlexThemeData.dark(),
-      home: const MainView(),
+    return DevApp(
+      routerConfig: DevRoute.rootRoute,
     );
   }
 }

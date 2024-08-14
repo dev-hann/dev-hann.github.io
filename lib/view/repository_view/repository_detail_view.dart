@@ -7,24 +7,23 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 class RepositoryDetailView extends ConsumerWidget {
   const RepositoryDetailView({
     super.key,
-    required this.post,
   });
-
-  final Post post;
+  static const routeName = "/detail/:id";
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final provider = ref.watch(repositoryDetailProvider(post));
-    return provider.when(
-      data: (data) {
-        return Text(data.toString());
-      },
-      error: (error, stackTrace) {
-        return Text(error.toString());
-      },
-      loading: () {
-        return const LoadingWidget();
-      },
-    );
+    return const Text("!!");
+    // final provider = ref.watch(repositoryDetailProvider(post));
+    // return provider.when(
+    //   data: (data) {
+    //     return Text(data.toString());
+    //   },
+    //   error: (error, stackTrace) {
+    //     return Text(error.toString());
+    //   },
+    //   loading: () {
+    //     return const LoadingWidget();
+    //   },
+    // );
   }
 }
