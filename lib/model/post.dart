@@ -1,31 +1,19 @@
-import 'package:equatable/equatable.dart';
+import 'package:blog/model/post_author.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-class Post extends Equatable {
-  const Post({
-    required this.title,
-    required this.createdDateTime,
-    required this.content,
-  });
-  final String title;
-  final DateTime createdDateTime;
-  final String content;
+part 'post.freezed.dart';
 
-  @override
-  List<Object?> get props => [
-        title,
-        createdDateTime,
-        content,
-      ];
-
-  Post copyWith({
-    String? title,
-    DateTime? createdDateTime,
+@freezed
+class Post with _$Post {
+  const factory Post({
+    required String title,
+    PostAuthor? author,
     String? content,
-  }) {
+  }) = _Post;
+
+  factory Post.fromJson(Map<String, dynamic> json) {
     return Post(
-      title: title ?? this.title,
-      createdDateTime: createdDateTime ?? this.createdDateTime,
-      content: content ?? this.content,
+      title: json["name"],
     );
   }
 }

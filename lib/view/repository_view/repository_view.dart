@@ -1,8 +1,11 @@
+import 'package:blog/provider/repository_provider.dart';
 import 'package:blog/widget/body_layout.dart';
+import 'package:blog/widget/loading_widget.dart';
 import 'package:blog/widget/post_grid_view.dart';
 import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class RepositoryView extends StatelessWidget {
+class RepositoryView extends ConsumerWidget {
   const RepositoryView({
     super.key,
   });
@@ -42,21 +45,33 @@ class RepositoryView extends StatelessWidget {
   }
 
   @override
-  Widget build(BuildContext context) {
-    return DevBodyLayout(
-      header: tagListView(),
-      child: Column(
-        children: [
-          searchTextField(),
-          const SizedBox(height: 16.0),
-          PostGridView(
-            crossAxisCount: 1,
-            itemList: List.generate(10, (index) {
-              return index;
-            }),
+  Widget build(BuildContext context, WidgetRef ref) {
+    final provider = ref.watch(repositoryProvider);
+    return provider.when(
+      data: (data) {
+        return DevBodyLayout(
+          header: tagListView(),
+          child: Column(
+            children: [
+              searchTextField(),
+              const SizedBox(height: 16.0),
+              PostGridView(
+                crossAxisCount: 1,
+                itemList: provider.value ?? [],
+                onItemTap: (item) {
+                  print(item);
+                },
+              ),
+            ],
           ),
-        ],
-      ),
+        );
+      },
+      error: (error, stackTrace) {
+        return Center(child: Text(error.toString()));
+      },
+      loading: () {
+        return const LoadingWidget();
+      },
     );
   }
 }

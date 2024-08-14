@@ -28,7 +28,8 @@ class DevBodyLayout extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
+    return Align(
+      alignment: Alignment.topCenter,
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 16.0),
         child: SingleChildScrollView(

@@ -126,11 +126,11 @@ class ProfileView extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const Text("Pinned"),
-        PostGridView(
-          itemList: List.generate(6, (index) {
-            return index;
-          }),
-        ),
+        // PostGridView(
+        //   itemList: List.generate(6, (index) {
+        //     return index;
+        //   }),
+        // ),
       ],
     );
   }
