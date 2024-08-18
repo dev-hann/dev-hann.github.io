@@ -8,6 +8,7 @@ part 'repository_detail_provider.g.dart';
 @riverpod
 class RepositoryDetail extends _$RepositoryDetail {
   final _useCase = PostUseCase();
+
   @override
   Future<PostDetail> build(Post post) async {
     await requestPostDetail(post);

@@ -1,10 +1,11 @@
 import 'package:blog/provider/repository_provider.dart';
-import 'package:blog/route/route.dart';
 import 'package:blog/view/repository_view/repository_detail_view.dart';
 import 'package:blog/widget/body_layout.dart';
 import 'package:blog/widget/loading_widget.dart';
+import 'package:blog/widget/post_card.dart';
 import 'package:blog/widget/post_grid_view.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class RepositoryView extends ConsumerWidget {
@@ -50,40 +51,40 @@ class RepositoryView extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final provider = ref.watch(repositoryProvider);
+    final postList = provider.value ?? [];
+
     return Scaffold(
       body: provider.when(
         data: (data) {
-          return PopScope(
-            canPop: false,
-            onPopInvokedWithResult: (didPop, result) {
-              print("###");
-              if (!didPop) {}
-            },
-            child: DevBodyLayout(
-              header: tagListView(),
-              child: Column(
-                children: [
-                  searchTextField(),
-                  const SizedBox(height: 16.0),
-                  PostGridView(
-                    crossAxisCount: 1,
-                    itemList: provider.value ?? [],
-                    onItemTap: (item) {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) {
-                            return RepositoryDetailView(
-                                // post: item,
-                                );
+          return DevBodyLayout(
+            header: tagListView(),
+            child: Column(
+              children: [
+                searchTextField(),
+                const SizedBox(height: 16.0),
+                ListView.separated(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemCount: postList.length,
+                  separatorBuilder: (context, index) {
+                    return const Divider();
+                  },
+                  itemBuilder: (context, index) {
+                    final post = postList[index];
+                    return PostCard(
+                      onTap: () {
+                        GoRouter.of(context).goNamed(
+                          RepositoryDetailView.routeName,
+                          pathParameters: {
+                            "title": post.title,
                           },
-                        ),
-                      );
-                      print(item);
-                    },
-                  ),
-                ],
-              ),
+                        );
+                      },
+                      post: post,
+                    );
+                  },
+                ),
+              ],
             ),
           );
         },

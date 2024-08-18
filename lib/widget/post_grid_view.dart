@@ -24,13 +24,11 @@ class PostGridView extends StatelessWidget {
       itemCount: itemList.length,
       itemBuilder: (context, index) {
         final item = itemList[index];
-        return InkWell(
+        return PostCard(
+          post: item,
           onTap: () {
             onItemTap(item);
           },
-          child: PostCard(
-            post: item,
-          ),
         );
       },
     );

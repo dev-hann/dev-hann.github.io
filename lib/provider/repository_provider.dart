@@ -22,4 +22,14 @@ class Repository extends _$Repository {
       state = AsyncValue.error(e, s);
     }
   }
+
+  Post? loadPost(String title) {
+    final list = state.value;
+    if (list == null) {
+      return null;
+    }
+    return list.firstWhere((post) {
+      return post.title == title;
+    });
+  }
 }
