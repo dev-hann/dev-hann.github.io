@@ -6,12 +6,12 @@ part of 'repository_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$repositoryHash() => r'998f45085e3cf1c8d813db940ac3200d0836b051';
+String _$repositoryHash() => r'bcc60fd42a7755e4db56c6ff9a399c90584b82d4';
 
 /// See also [Repository].
 @ProviderFor(Repository)
 final repositoryProvider =
-    AutoDisposeAsyncNotifierProvider<Repository, List<Post>>.internal(
+    AutoDisposeAsyncNotifierProvider<Repository, RepositoryState>.internal(
   Repository.new,
   name: r'repositoryProvider',
   debugGetCreateSourceHash:
@@ -20,6 +20,6 @@ final repositoryProvider =
   allTransitiveDependencies: null,
 );
 
-typedef _$Repository = AutoDisposeAsyncNotifier<List<Post>>;
+typedef _$Repository = AutoDisposeAsyncNotifier<RepositoryState>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

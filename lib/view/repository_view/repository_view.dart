@@ -3,7 +3,7 @@ import 'package:blog/view/repository_view/repository_detail_view.dart';
 import 'package:blog/widget/body_layout.dart';
 import 'package:blog/widget/loading_widget.dart';
 import 'package:blog/widget/post_card.dart';
-import 'package:blog/widget/post_grid_view.dart';
+import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -33,34 +33,49 @@ class RepositoryView extends ConsumerWidget {
     );
   }
 
-  Widget searchTextField() {
-    return Row(
-      children: [
-        const Expanded(
-          child: TextField(),
-        ),
-        const SizedBox(width: 8.0),
-        ElevatedButton(
-          onPressed: () {},
-          child: const Text("Search"),
-        ),
-      ],
+  Widget searchTextField({
+    required String query,
+    required Function(String value) onSearch,
+  }) {
+    final controller = TextEditingController(
+      text: query,
+    );
+    return TextField(
+      controller: controller,
+      onChanged: (value) {
+        EasyDebounce.debounce(
+          "repositoryViewQueryTextField",
+          const Duration(seconds: 1),
+          () {
+            final text = controller.text.trim();
+            onSearch(text);
+          },
+        );
+      },
     );
   }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final provider = ref.watch(repositoryProvider);
-    final postList = provider.value ?? [];
 
     return Scaffold(
       body: provider.when(
-        data: (data) {
+        data: (state) {
+          final query = state.query;
+          final postList = state.postList.where((post) {
+            return post.title.contains(query);
+          }).toList();
           return DevBodyLayout(
             header: tagListView(),
             child: Column(
               children: [
-                searchTextField(),
+                searchTextField(
+                  onSearch: (value) {
+                    ref.read(repositoryProvider.notifier).searchQuery(value);
+                  },
+                  query: query,
+                ),
                 const SizedBox(height: 16.0),
                 ListView.separated(
                   shrinkWrap: true,
