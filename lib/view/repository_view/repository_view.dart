@@ -67,7 +67,7 @@ class RepositoryView extends ConsumerWidget {
             return post.title.contains(query);
           }).toList();
           return DevBodyLayout(
-            header: tagListView(),
+            leading: tagListView(),
             child: Column(
               children: [
                 searchTextField(

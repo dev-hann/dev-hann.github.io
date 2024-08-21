@@ -4,15 +4,15 @@ class DevBodyLayout extends StatelessWidget {
   const DevBodyLayout({
     super.key,
     this.maxWidth = 1280.0,
-    this.header,
+    this.leading,
     required this.child,
   });
   final double maxWidth;
   final Widget child;
-  final Widget? header;
+  final Widget? leading;
 
   Widget headerWidget() {
-    if (header == null) {
+    if (leading == null) {
       return const SizedBox();
     }
     return Padding(
@@ -21,7 +21,7 @@ class DevBodyLayout extends StatelessWidget {
       ),
       child: SizedBox(
         width: 296,
-        child: header,
+        child: leading,
       ),
     );
   }

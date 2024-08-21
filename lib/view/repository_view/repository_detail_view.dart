@@ -5,6 +5,7 @@ import 'package:blog/widget/loading_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:markdown/markdown.dart' as md;
 
 class RepositoryDetailView extends ConsumerWidget {
   const RepositoryDetailView({
@@ -21,16 +22,20 @@ class RepositoryDetailView extends ConsumerWidget {
     if (post == null) {
       return const Text("post is Empty");
     }
-    final provider2 = ref.watch(repositoryDetailProvider(post));
+    final detailProvider = ref.watch(repositoryDetailProvider(post));
     return DevBodyLayout(
-      child: provider2.when(
+      child: detailProvider.when(
         data: (data) {
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(data.title),
               MarkdownBody(
                 data: data.content,
+                extensionSet: md.ExtensionSet.gitHubWeb,
+                styleSheet: MarkdownStyleSheet(
+                  h1: Theme.of(context).textTheme.headlineLarge,
+                  h2: Theme.of(context).textTheme.headlineMedium,
+                ),
               ),
             ],
           );
